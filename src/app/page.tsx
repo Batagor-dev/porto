@@ -118,7 +118,7 @@ export default function Home() {
   const currentData = activeTab === 'projects' ? projects : certifications;
 
   return (
-    <div className="flex flex-col w-full bg-white dark:bg-zinc-950">
+    <div className="flex flex-col w-full bg-white ">
       
       {/* SECTION 1: HERO */}
       <section ref={sectionRef} className="relative min-h-[200px] h-screen flex flex-col items-center justify-center bg-[#1a47ff] overflow-hidden p-4 md:p-10">
@@ -153,7 +153,7 @@ export default function Home() {
       {/* SECTION 2: ABOUT */}
       <section
         id="about"
-        className="relative z-40 py-24 bg-white dark:bg-zinc-950 px-6 md:px-20 rounded-t-[60px] md:rounded-t-[100px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)] -mt-20"
+        className="relative z-40 py-24 bg-white px-6 md:px-20 rounded-t-[60px] md:rounded-t-[100px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)] -mt-20"
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           <ProfileCard profileImage={Profile} />
@@ -186,7 +186,7 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-                  <motion.div whileHover={{ y: -10, transition: { duration: 0.2 } }} className="bg-white dark:bg-zinc-900 p-8 rounded-[2.5rem] shadow-xl border-2 border-b-black dark:border-zinc-800 flex flex-col gap-2 relative z-10">
+                  <motion.div whileHover={{ y: -10, transition: { duration: 0.2 } }} className="bg-white p-8 rounded-[2.5rem] shadow-xl border-2 border-b-black dark:border-zinc-800 flex flex-col gap-2 relative z-10">
                     <span className="text-6xl font-black text-[#1a47ff] tracking-tighter">1+</span>
                     <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] leading-tight">
                       Years of<br />Experience
@@ -233,13 +233,13 @@ export default function Home() {
       </section> */}
 
       {/* SECTION 4: PORTFOLIO */}
-      <section id="porto" className="py-24 bg-zinc-50 dark:bg-zinc-950 px-6 md:px-20 relative">
+      <section id="porto" className="py-24 bg-zinc-50 px-6 md:px-20 relative">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
-            <h2 className="text-6xl md:text-8xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase flex items-center gap-4">
+            <h2 className="text-6xl md:text-8xl font-black text-zinc-900  tracking-tighter uppercase flex items-center gap-4">
               P <span className="text-[#c9e55e] animate-spin-slow"><TiStarburst /></span> RTFOLIO
             </h2>
-            <div className="flex p-1.5 bg-zinc-200/50 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl border border-zinc-300 w-fit">
+            <div className="flex p-1.5 bg-zinc-200/50 backdrop-blur-md rounded-2xl border border-zinc-300 w-fit">
               {['projects', 'certs'].map((tab) => (
                 <button key={tab} onClick={() => setActiveTab(tab)} className={`relative px-6 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === tab ? 'text-black' : 'text-zinc-500'}`}>
                   {activeTab === tab && <motion.div layoutId="activeTab" className="absolute inset-0 bg-[#c9e55e] rounded-xl shadow-lg" />}

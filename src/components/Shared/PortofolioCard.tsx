@@ -58,11 +58,11 @@ export default function PortfolioCard({ item, index }: { item: PortfolioItem, in
         delay: index * 0.05 
       }}
       whileHover={{ y: -10 }}
-      className="group relative bg-white dark:bg-zinc-900 rounded-[2.5rem] overflow-hidden border-2 border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-2xl hover:border-black transition-all duration-500"
+      className="group relative bg-white  rounded-[2.5rem] overflow-hidden border-2 border-zinc-100  shadow-sm hover:shadow-2xl hover:border-black transition-all duration-500"
     >
       <a href={item.link} className="block cursor-pointer">
         {/* Foto Area */}
-        <div className="relative aspect-video w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+        <div className="relative aspect-video w-full overflow-hidden bg-zinc-100 ">
           <Image 
             src={item.image} 
             alt={item.title} 
@@ -72,8 +72,8 @@ export default function PortfolioCard({ item, index }: { item: PortfolioItem, in
           <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
           
           <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="w-10 h-10 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
-              <FiArrowUpRight className="text-zinc-900 dark:text-white" />
+            <div className="w-10 h-10 bg-white/90  backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
+              <FiArrowUpRight className="text-zinc-900 " />
             </div>
           </div>
         </div>

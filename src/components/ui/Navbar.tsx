@@ -60,7 +60,7 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href} 
                     className={`px-5 py-2 text-sm font-semibold transition-all duration-300 rounded-full hover:bg-[#c9e55e] hover:text-black ${
-                        isScrolled ? "bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-lg px-6 text-black" : "text-white"
+                        isScrolled ? "bg-white/80  backdrop-blur-md shadow-lg px-6 text-black" : "text-white"
                     }`}
                 >
                     {link.name}
@@ -86,7 +86,7 @@ export default function Navbar() {
                 onClick={toggleMenu}
                 className={`md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-full border transition-all ${
                     isScrolled 
-                    ? "bg-zinc-100 dark:bg-white/10 border-zinc-200 dark:border-white/20 text-black dark:text-white" 
+                    ? "bg-zinc-100 dark:bg-white/10 border-zinc-200 text-black dark:text-white" 
                     : "bg-white/10 border-white/20 text-white"
                 }`}
             >
@@ -99,13 +99,13 @@ export default function Navbar() {
 
       {/* MOBILE MENU DROPDOWN */}
       <div className={`md:hidden absolute top-24 left-4 right-4 transition-all duration-500 transform ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 backdrop-blur-xl rounded-3xl p-6 flex flex-col gap-4 shadow-2xl">
+        <div className="bg-white border border-zinc-200 backdrop-blur-xl rounded-3xl p-6 flex flex-col gap-4 shadow-2xl">
             {navLinks.map((link) => (
                 <Link 
                     key={link.name}
                     href={link.href} 
                     onClick={() => setIsOpen(false)}
-                    className="text-zinc-900 dark:text-white text-lg font-bold py-2 border-b border-zinc-100 dark:border-white/5 hover:text-[#1a47ff]"
+                    className="text-zinc-900 text-lg font-bold py-2 border-b border-zinc-100 hover:text-[#1a47ff]"
                 >
                     {link.name}
                 </Link>

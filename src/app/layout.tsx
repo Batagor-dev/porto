@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="overflow-x-hidden">
-      <body className="bg-slate-900 antialiased overflow-x-hidden">
+      <body className="bg-white antialiased overflow-x-hidden">
         {/* Navbar tetap fixed di atas */}
         <Navbar />
         
