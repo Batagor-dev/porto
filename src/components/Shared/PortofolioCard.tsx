@@ -67,6 +67,7 @@ export default function PortfolioCard({ item, index }: { item: PortfolioItem, in
             src={item.image} 
             alt={item.title} 
             fill 
+            unoptimized
             className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />

@@ -11,7 +11,7 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className="bg-white antialiased overflow-x-hidden">
         {/* Navbar tetap fixed di atas */}
-        <Navbar />
+        {/* <Navbar /> */}
         
         {/* Hapus pt-16 agar Hero Section bisa memenuhi layar dari paling atas */}
         <main>

@@ -55,7 +55,7 @@ const ProfileCard = ({ profileImage }: ProfileCardProps) => {
             transition={{ type: "spring", stiffness: 300 }}
             className="relative z-10 w-72 h-[450px] md:w-80 md:h-[500px] rounded-[3rem] p-[2px] bg-gradient-to-b from-[#c9e55e] via-[#1a47ff] to-[#c9e55e] shadow-[0_0_50px_-12px_rgba(26,71,255,0.5)] overflow-hidden"
           >
-            <div className="relative w-full h-full rounded-[2.9rem] overflow-hidden bg-zinc-900">
+            <div className="relative w-full h-[450px] md:h-[500px] rounded-[2.9rem] overflow-hidden bg-zinc-900">
               <Image 
                 src={profileImage} 
                 alt="Profile" 
