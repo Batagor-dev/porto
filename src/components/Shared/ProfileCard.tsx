@@ -61,6 +61,7 @@ const ProfileCard = ({ profileImage }: ProfileCardProps) => {
                 alt="Profile" 
                 fill 
                 priority 
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" 
               />
               
