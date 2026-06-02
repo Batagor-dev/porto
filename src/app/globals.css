@@ -1,6 +1,10 @@
 
 @import "tailwindcss";
 
+html{
+  scroll-behavior: smooth;
+}
+
 @theme {
   /* Definisikan Keyframes */
   @keyframes floating {
