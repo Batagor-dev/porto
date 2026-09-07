@@ -28,7 +28,17 @@ interface CertificationItem extends BaseItem {
 type PortfolioItem = ProjectItem | CertificationItem;
 
 
-export default function PortfolioCard({ item, index, loading, t }: { item: PortfolioItem, index: number, loading?: boolean, t: (key: keyof Translations) => string }) {
+export default function PortfolioCard({
+  item,
+  index,
+  loading,
+  t = (key) => (key === 'buttonDetail' ? 'LIHAT DETAIL' : String(key)),
+}: {
+  item: PortfolioItem;
+  index: number;
+  loading?: boolean;
+  t?: (key: keyof Translations) => string;
+}) {
   const isProject = 'tech' in item;
 
   return (

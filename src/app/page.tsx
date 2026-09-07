@@ -15,9 +15,8 @@ import Avatar1 from '@/Assets/Images/Avatar/Avatar-1.png';
 import Avatar2 from '@/Assets/Images/Avatar/Avatar-2.png';
 import Profile from '@/Assets/Images/Profile/profile.jpeg';
 import Damy from '@/Assets/Images/damy/image.png';
+import { getProjects } from '@/services/projects';
 import Image from 'next/image';
-
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
 /* =========================
    ❌ DIHAPUS: fetchData global
@@ -47,7 +46,6 @@ export default function Home() {
      FIX TYPE STATE (biar gak any kosong)
      ========================= */
   const [projects, setProjects] = useState<any[]>([]);
-  const [certifications, setCertifications] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   /* =========================
@@ -71,32 +69,33 @@ export default function Home() {
   }, []);
 
   /* =========================
-     FIX FETCH DATA (INI YANG UTAMA)
-     - sebelumnya: getProjects + getCertificates dobel endpoint
-     - sekarang: 1 API saja (all-data)
+     FETCH DATA FROM SUPABASE
      ========================= */
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
+    let isMounted = true;
+    setIsLoading(true);
 
-        const res = await fetch(`${API_BASE_URL}/all-data`);
-        const json = await res.json();
+    getProjects()
+      .then((data) => {
+        if (isMounted) {
+          setProjects(data);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching projects from Supabase:", err);
+        if (isMounted) {
+          setProjects([]);
+        }
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      });
 
-        // FIX: ambil dari json.data (bukan langsung res.data)
-        const data = json.data;
-
-        setProjects(data.projects || []);
-        setCertifications(data.sertifikats || []);
-
-      } catch (error) {
-        console.error("Fetch error:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    return () => {
+      isMounted = false;
     };
-
-    fetchData();
   }, []);
 
   useEffect(() => {
@@ -104,61 +103,38 @@ export default function Home() {
   }, [activeTab]);
 
   /* =========================
-     FIX MAPPING PROJECT IMAGE
-     - sebelumnya: proj.image cuma string raw
-     - sekarang: langsung pakai URL full backend
+     MAPPING PROJECT IMAGE & DATA FROM SUPABASE
      ========================= */
-  const mappedProjects = projects.map((proj: any) => ({
-    title: language === "en"
-      ? (proj.name_project_en || proj.name_project_id)
-      : proj.name_project_id,
+  const mappedProjects = projects.map((project) => ({
+    title:
+      language === "en"
+        ? (project.name_project_en || project.name_project_id)
+        : project.name_project_id,
 
-    category: proj.type,
-    description: language === "en"
-      ? (proj.deskripsi_en || proj.deskripsi_id)
-      : proj.deskripsi_id,
+    category: Array.isArray(project.technology)
+      ? project.technology.join(", ")
+      : (project.technology || ""),
 
-    tech: proj.technology || [],
-    link: proj.slug ? `/projects/${proj.slug}` : "#",
-    slug: proj.slug,
+    description:
+      language === "en"
+        ? (project.deskripsi_en || project.deskripsi_id)
+        : project.deskripsi_id,
 
-    /* FIX IMAGE:
-       ❌ sebelumnya: image: proj.image
-       ✅ sekarang: pakai storage URL full */
-    image: proj.image
-      ? `${proj.image}`
-      : Damy,
+    tech: Array.isArray(project.technology) ? project.technology : [],
+
+    image: project.image,
+
+    slug: project.slug,
+
+    link: `/projects/${project.slug}`,
+
+    demo: project.link_demo,
   }));
 
-  /* =========================
-     FIX CERT IMAGE (SUDAH BENAR)
-     ========================= */
-  const mappedCerts = certifications.map((cert: any) => ({
-    title: language === "en"
-      ? (cert.name_sertifikat_en || cert.name_sertifikat_id)
-      : cert.name_sertifikat_id,
-
-    issuer: "BNSP Indonesia",
-    description: language === "en"
-      ? (cert.deskripsi_en || cert.deskripsi_id)
-      : cert.deskripsi_id,
-
-    date: cert.published_at
-      ? new Date(cert.published_at).getFullYear().toString()
-      : "2026",
-
-    certId: cert.slug || "N/A",
-    link: cert.slug ? `/sertifikats/${cert.slug}` : "#",
-    slug: cert.slug,
-
-    image: cert.image
-      ? `${cert.image}`
-      : Damy,
-  }));
 
   const currentData = activeTab === 'projects'
     ? mappedProjects
-    : mappedCerts;
+    : [];
 
   const title = language === 'id' ? 'PORTOFOLIO' : 'PORTFOLIO';
 

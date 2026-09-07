@@ -16,6 +16,7 @@ import {
   FiCpu,
 } from "react-icons/fi";
 
+import { getProjectBySlug } from "@/services/projects";
 import Damy from '@/Assets/Images/damy/image.png'; // Fallback jika gambar error
 
 // Cache to store fetched project details
@@ -31,8 +32,10 @@ export default function ProjectDetailPage() {
   const [loading, setLoading] = useState(() => {
     return slug ? !projectCache[slug] : true;
   });
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchProjectDetail = async () => {
       if (!slug) return;
       
@@ -45,19 +48,28 @@ export default function ProjectDetailPage() {
       }
 
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/projects/${slug}`);
-        const result = await res.json();
-        const projectData = result.data;
-        setProject(projectData);
-        projectCache[slug] = projectData;
+        const projectData = await getProjectBySlug(slug);
+        if (isMounted) {
+          setProject(projectData);
+          if (projectData) {
+            projectCache[slug] = projectData;
+            setSelectedImage(projectData.image || null);
+          }
+        }
       } catch (error) {
         console.error("Gagal mengambil detail project:", error);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchProjectDetail();
+
+    return () => {
+      isMounted = false;
+    };
   }, [slug]);
 
   if (loading) return (
@@ -72,10 +84,8 @@ export default function ProjectDetailPage() {
     </div>
   );
 
-  // Helper untuk URL Gambar
-  const imageUrl = project.image 
-    ? `http://127.0.0.1:8000/storage/${project.image}` 
-    : Damy;
+  // Helper untuk URL Gambar (dari Supabase Storage atau fallback)
+  const activeImage = selectedImage || project.image || Damy;
 
   const tech = Array.isArray(project.technology) ? project.technology : [];
 
@@ -143,20 +153,46 @@ export default function ProjectDetailPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-6">
             <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="relative aspect-video rounded-[2rem] overflow-hidden border-[4px] border-zinc-900 bg-zinc-100 group"
             >
                 <Image
-                    src={imageUrl}
+                    src={activeImage}
                     alt={project.name_project_id}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    unoptimized={true} // Karena kita fetch dari Localhost Laravel
+                    unoptimized={true}
                 />
             </motion.div>
+
+            {/* Gallery Thumbnail jika ada lebih dari 1 gambar di project_images */}
+            {Array.isArray(project.images) && project.images.length > 1 && (
+              <div className="flex items-center gap-3 overflow-x-auto pb-2">
+                {project.images.map((img: string, idx: number) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setSelectedImage(img)}
+                    className={`relative w-24 h-16 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
+                      activeImage === img
+                        ? "border-[#1a47ff] scale-105 shadow-md"
+                        : "border-zinc-200 opacity-70 hover:opacity-100"
+                    }`}
+                  >
+                    <Image
+                      src={img}
+                      alt={`${project.name_project_id}-${idx}`}
+                      fill
+                      className="object-cover"
+                      unoptimized={true}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
 
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                  <div className="p-8 bg-zinc-50 border border-zinc-100 rounded-[1.5rem] flex items-start gap-5 hover:bg-white transition-colors">
