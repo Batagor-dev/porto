@@ -105,31 +105,42 @@ export default function Home() {
   /* =========================
      MAPPING PROJECT IMAGE & DATA FROM SUPABASE
      ========================= */
-  const mappedProjects = projects.map((project) => ({
-    title:
+  const mappedProjects = projects.map((project) => {
+    const name =
       language === "en"
         ? (project.name_project_en || project.name_project_id)
-        : project.name_project_id,
+        : project.name_project_id;
 
-    category: Array.isArray(project.technology)
-      ? project.technology.join(", ")
-      : (project.technology || ""),
-
-    description:
+    const description =
       language === "en"
         ? (project.deskripsi_en || project.deskripsi_id)
-        : project.deskripsi_id,
+        : project.deskripsi_id;
 
-    tech: Array.isArray(project.technology) ? project.technology : [],
+    const tech = Array.isArray(project.technology) ? project.technology : [];
 
-    image: project.image,
-
-    slug: project.slug,
-
-    link: `/projects/${project.slug}`,
-
-    demo: project.link_demo,
-  }));
+    return {
+      title: name,
+      name: name,
+      category: Array.isArray(project.technology)
+        ? project.technology.join(", ")
+        : (project.technology || ""),
+      description: description,
+      deskripsi: description,
+      tech: tech,
+      technology: project.technology,
+      image: project.image,
+      img: project.image,
+      slug: project.slug,
+      link: `/projects/${project.slug}`,
+      demo: project.link_demo,
+      link_demo: project.link_demo,
+      link_github: project.link_github,
+      type: project.type || 'Web Application',
+      create_at: project.created_at || (project as any).create_at,
+      created_at: project.created_at || (project as any).create_at,
+      raw: project,
+    };
+  });
 
 
   const currentData = activeTab === 'projects'

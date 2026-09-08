@@ -11,13 +11,13 @@ interface ProfileCardProps {
 
 const ProfileCard = ({ profileImage }: ProfileCardProps) => {
   return (
-    <div className="flex flex-col lg:flex-row gap-12 items-center lg:items-center justify-center">
-      <div className="flex flex-col justify-center text-center lg:text-left p-10">
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center justify-center">
+      <div className="flex flex-col justify-center text-center lg:text-left p-2 sm:p-6 lg:p-10">
         <div className="relative group shrink-0 mx-auto lg:mx-0 w-fit">
           
           {/* Dot Grid Decoration */}
-          <div className="absolute -top-6 -left-6 w-20 h-20 opacity-40 z-0">
-            <div className="grid grid-cols-4 gap-3">
+          <div className="absolute -top-3 -left-3 sm:-top-6 sm:-left-6 w-14 sm:w-20 h-14 sm:h-20 opacity-40 z-0">
+            <div className="grid grid-cols-4 gap-2 sm:gap-3">
               {[...Array(16)].map((_, i) => (
                 <div key={i} className="w-1 h-1 bg-[#c9e55e] rounded-full animate-pulse" />
               ))}
@@ -56,9 +56,10 @@ const ProfileCard = ({ profileImage }: ProfileCardProps) => {
             transition={{ type: "spring", stiffness: 300 }}
             className="
               relative z-10
-              w-72 h-[450px]
+              w-60 h-[350px]
+              sm:w-72 sm:h-[430px]
               md:w-80 md:h-[500px]
-              rounded-[3rem]
+              rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3rem]
               p-[2px]
               bg-gradient-to-b
               from-[#c9e55e]
@@ -68,24 +69,24 @@ const ProfileCard = ({ profileImage }: ProfileCardProps) => {
               overflow-hidden
             "
           >
-            <div className="relative w-full h-[450px] md:h-[500px] rounded-[2.9rem] overflow-hidden bg-zinc-900">
+            <div className="relative w-full h-[350px] sm:h-[430px] md:h-[500px] rounded-[1.9rem] sm:rounded-[2.4rem] md:rounded-[2.9rem] overflow-hidden bg-zinc-900">
               <Image 
                 src={profileImage} 
                 alt="Profile" 
                 fill 
                 priority 
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 640px) 240px, (max-width: 768px) 288px, 320px"
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" 
               />
               
               {/* Availability Badge */}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[85%] bg-white/10 backdrop-blur-lg border border-white/20 p-4 rounded-2xl z-30">
-                <div className="flex items-center justify-between">
+              <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 w-[88%] sm:w-[85%] bg-white/10 backdrop-blur-lg border border-white/20 p-2.5 sm:p-4 rounded-xl sm:rounded-2xl z-30">
+                <div className="flex items-center justify-between gap-2">
                   <div className="text-left">
-                    <p className="text-[10px] text-[#c9e55e] font-bold uppercase tracking-widest">Available for hire</p>
-                    <h3 className="text-white font-bold text-sm">Fullstack Developer</h3>
+                    <p className="text-[9px] sm:text-[10px] text-[#c9e55e] font-bold uppercase tracking-widest leading-none mb-1">Available for hire</p>
+                    <h3 className="text-white font-bold text-xs sm:text-sm leading-tight">Fullstack Developer</h3>
                   </div>
-                  <FiZap className="text-[#c9e55e] fill-[#c9e55e]" />
+                  <FiZap className="text-[#c9e55e] fill-[#c9e55e] text-base shrink-0" />
                 </div>
               </div>
             </div>
@@ -95,9 +96,9 @@ const ProfileCard = ({ profileImage }: ProfileCardProps) => {
           <motion.div 
             animate={{ boxShadow: ["0px 0px 0px rgba(26,71,255,0)", "0px 0px 20px rgba(26,71,255,0.6)", "0px 0px 0px rgba(26,71,255,0)"] }} 
             transition={{ duration: 2, repeat: Infinity }} 
-            className="absolute -bottom-4 -right-4 z-20 bg-[#c9e55e] p-3 rounded-2xl shadow-2xl border-4 border-zinc-900"
+            className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 z-20 bg-[#c9e55e] p-2.5 sm:p-3 rounded-xl sm:rounded-2xl shadow-2xl border-2 sm:border-4 border-zinc-900"
           >
-            <FiCode className="text-black text-2xl" />
+            <FiCode className="text-black text-xl sm:text-2xl" />
           </motion.div>
 
           {/* Animated Dashed Ring */}
